@@ -101,7 +101,7 @@ module.exports = function(RED) {
             },15000);
         }
         else {
-            if (this.uuid !== undefined) {
+            if (this.uuid === undefined) {
                 node.status({fill:"red", shape:"ring", text:"no mac address"});
                 node.log("no mac address ",node.uuid);
             } else {
