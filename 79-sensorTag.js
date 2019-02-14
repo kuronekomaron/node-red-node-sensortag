@@ -31,7 +31,7 @@ module.exports = function(RED) {
                         node.topic = node.topic || sensorTag._peripheral.uuid;
                         sensorTag.connect(function() {
                             node.log("connected to sensor tag: " + sensorTag._peripheral.uuid);
-                            node.status({fill:"green", shape:"dot", text:"connected"});
+                            node.status({fill:"green", shape:"dot", text:"connected "+node.uuid});
 
                             sensorTag.once('disconnect', function() {
                                 node.discovering = false;
@@ -101,9 +101,13 @@ module.exports = function(RED) {
             },15000);
         }
         else {
-           console.log("reconfig",node.uuid); 
-           console.log("reconfig",node.uuid);
-            // enable(node);
+            if (this.uuid !== undefined) {
+                node.status({fill:"red", shape:"ring", text:"no mac address"});
+                node.log("no mac address ",node.uuid);
+            } else {
+                node.status({fill:"red", shape:"ring", text:"error"});
+                node.log("error ",node.uuid);
+            }
         }
 
         this.on("close", function() {
