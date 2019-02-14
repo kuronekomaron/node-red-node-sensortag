@@ -19,7 +19,7 @@ module.exports = function(RED) {
         var node = this;
         node.discovering = false;
 
-        if (typeof node.stag === "undefined" && this.uuid !== undefined) {
+        if (typeof node.stag === "undefined" && node.uuid !== undefined) {
             node.loop = setInterval(function() {
                 if (!node.discovering) {
                     node.status({fill:"blue", shape:"dot", text:"discovering..."});
@@ -101,7 +101,7 @@ module.exports = function(RED) {
             },15000);
         }
         else {
-            if (this.uuid === undefined) {
+            if (node.uuid === undefined) {
                 node.status({fill:"red", shape:"ring", text:"no mac address"});
                 node.log("no mac address ",node.uuid);
             } else {
