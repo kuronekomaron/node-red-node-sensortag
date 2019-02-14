@@ -19,7 +19,7 @@ module.exports = function(RED) {
         var node = this;
         node.discovering = false;
 
-        if (typeof node.stag === "undefined") {
+        if (typeof node.stag === "undefined" && this.uuid !== undefined) {
             node.loop = setInterval(function() {
                 if (!node.discovering) {
                     node.status({fill:"blue", shape:"dot", text:"discovering..."});
@@ -52,7 +52,7 @@ module.exports = function(RED) {
                                 sensorTag.enableBarometricPressure(function() {});
                                 sensorTag.on('barometricPressureChange', function(pressure) {
                                     var msg = {'topic': node.topic + '/pressure'};
-                                    msg.payload = {'pressure': pressure.toFixed(1)};
+                                    msg.payload = {'pressure': +pressure.toFixed(1)};
                                     node.send(msg);
                                 });
                                 sensorTag.enableHumidity(function() {});
@@ -101,7 +101,8 @@ module.exports = function(RED) {
             },15000);
         }
         else {
-            console.log("reconfig",node.uuid);
+           console.log("reconfig",node.uuid); 
+           console.log("reconfig",node.uuid);
             // enable(node);
         }
 
