@@ -15,11 +15,12 @@ module.exports = function(RED) {
         this.gyroscope = n.gyroscope;
         this.luxometer = n.luxometer;
         this.keys = n.keys;
-        if (this.uuid === "") { this.uuid = undefined; }
+        if (this.uuid === "") {this.uuid = undefined; }
         var node = this;
         node.discovering = false;
 
         if (typeof node.stag === "undefined" && node.uuid !== undefined) {
+            node.status({});
             node.loop = setInterval(function() {
                 if (!node.discovering) {
                     node.status({fill:"blue", shape:"dot", text:"discovering..."});
@@ -102,7 +103,7 @@ module.exports = function(RED) {
         }
         else {
             if (node.uuid === undefined) {
-                node.status({fill:"red", shape:"ring", text:"no mac address"});
+                node.status({fill:"grey", shape:"ring", text:"no mac address"});
                 node.log("no mac address ",node.uuid);
             } else {
                 node.status({fill:"red", shape:"ring", text:"error"});
